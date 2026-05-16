@@ -54,6 +54,51 @@ export class CreateMasterCustomerDto {
   @IsOptional()
   @IsString()
   phone?: string;
+
+  @ApiProperty({ required: false })
+  @IsOptional()
+  @IsString()
+  phone2?: string;
+
+  @ApiProperty({ required: false })
+  @IsOptional()
+  @IsString()
+  birthday?: string;
+
+  @ApiProperty({ required: false })
+  @IsOptional()
+  @IsString()
+  idCardNumber?: string;
+
+  @ApiProperty({ required: false })
+  @IsOptional()
+  @IsString()
+  address?: string;
+
+  @ApiProperty({ required: false })
+  @IsOptional()
+  @IsString()
+  lineId?: string;
+
+  @ApiProperty({ required: false })
+  @IsOptional()
+  @IsString()
+  facebook?: string;
+
+  @ApiProperty({ required: false })
+  @IsOptional()
+  @IsString()
+  source?: string;
+
+  @ApiProperty({ required: false })
+  @IsOptional()
+  @IsString()
+  note?: string;
+
+  @ApiProperty({ required: false })
+  @IsOptional()
+  @IsString()
+  tag?: string;
 }
 
 export class UpdateMasterCustomerDto extends PartialType(

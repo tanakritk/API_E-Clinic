@@ -13,7 +13,7 @@ async function bootstrap() {
   const config = new DocumentBuilder()
     .setTitle('E-Clinic API')
     .setDescription('The E-Clinic API description')
-    .setVersion('1.1')
+    .setVersion('1.2')
     .addTag('api')
     .build();
   const documentFactory = () => SwaggerModule.createDocument(app, config);

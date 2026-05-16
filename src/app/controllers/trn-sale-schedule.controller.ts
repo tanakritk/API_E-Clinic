@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Delete,
+  Get,
   InternalServerErrorException,
   Param,
   Post,
@@ -16,6 +17,7 @@ import {
 } from '../dto/trn-sale-schedule.dto';
 import { ResponseDataVm } from 'src/app/view-model/response-data.vm';
 import { PaginationVm } from 'src/app/view-model/pagination.vm';
+import { ResponseOriginalDataVm } from '../view-model/response-original-data.vm';
 
 @Controller('sale-schedule')
 export class SaleScheduleController {
@@ -61,6 +63,16 @@ export class SaleScheduleController {
     try {
       const result = await this.saleScheduleService.delete(id);
       return ResponseDataVm.convertToVm(result);
+    } catch (err) {
+      throw new InternalServerErrorException(err.message);
+    }
+  }
+
+  @Get('bill-detail/:saleItemId')
+  async getBillDetail(@Param('saleItemId') saleItemId: number) {
+    try {
+      const result = await this.saleScheduleService.getBillDetail(saleItemId);
+      return ResponseOriginalDataVm.convertToVm(result);
     } catch (err) {
       throw new InternalServerErrorException(err.message);
     }
