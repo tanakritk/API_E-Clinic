@@ -1,6 +1,13 @@
 import { ApiProperty, PartialType } from '@nestjs/swagger';
 import { Transform, Type } from 'class-transformer';
-import { IsBoolean, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import {
+  IsBoolean,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+} from 'class-validator';
+import { VatTypeEnum } from '../enum/mas-branch.enum';
 
 export class CreateMasterBranchDto {
   @ApiProperty({ required: false })
@@ -64,6 +71,17 @@ export class CreateMasterBranchDto {
   )
   @IsBoolean()
   isActive?: boolean;
+
+  @ApiProperty({ required: false })
+  @IsOptional()
+  @IsString()
+  vatType?: VatTypeEnum;
+
+  @ApiProperty({ required: false })
+  @IsOptional()
+  @Type(() => Number)
+  @IsNumber()
+  vatRate?: number;
 }
 
 export class UpdateMasterBranchDto extends PartialType(CreateMasterBranchDto) {

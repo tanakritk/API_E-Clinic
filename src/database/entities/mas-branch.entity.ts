@@ -4,6 +4,7 @@ import { MasterUser } from './mas-user.entity';
 import { booleanTransformer } from 'src/helpers/function';
 import { Stock } from './trn-stock.entity';
 import { Sale } from './trn-sale.entity';
+import { VatTypeEnum } from 'src/app/enum/mas-branch.enum';
 
 @Entity({ name: 'mas_branch' })
 export class MasterBranch extends BaseEntity {
@@ -44,6 +45,23 @@ export class MasterBranch extends BaseEntity {
     transformer: booleanTransformer,
   })
   isActive: boolean;
+
+  @Column({
+    type: 'varchar',
+    length: 50,
+    nullable: false,
+    default: VatTypeEnum.NONE,
+  })
+  vatType: VatTypeEnum;
+
+  @Column({
+    type: 'decimal',
+    precision: 5,
+    scale: 2,
+    nullable: false,
+    default: 0,
+  })
+  vatRate: number;
 
   @OneToMany(() => MasterUser, (user) => user.mas_branch)
   mas_user: MasterUser[];
