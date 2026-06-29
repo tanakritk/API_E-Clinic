@@ -25,5 +25,6 @@ jobs:
             docker run -d \
               --name api-e-clinic \
               --restart always \
-              -p 3000:3000 \
+              -p 9001:9001 \
+              --env-file /opt/api-e-clinic/.env \
               api-e-clinic:latest
