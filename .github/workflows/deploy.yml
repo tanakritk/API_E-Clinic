@@ -44,7 +44,7 @@ jobs:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_SSH_KEY }}
-          envs: GHCR_TOKEN,GHCR_USER,IMAGE
+          envs: GHCR_TOKEN,GHCR_USER,IMAGE,APP_JWT_SIGNATURE,APP_PASSWORD_KEY,APP_DEFAULT_PASSWORD,DB_HOST,DB_PORT,DB_USERNAME,DB_PASSWORD,DB_NAME
           script: |
             echo $GHCR_TOKEN | docker login ghcr.io -u $GHCR_USER --password-stdin
             docker pull $IMAGE:latest
@@ -54,9 +54,25 @@ jobs:
               --name api-e-clinic \
               --restart always \
               -p 9001:9001 \
-              --env-file /opt/api-e-clinic/.env \
+              -e APP_PORT=9001 \
+              -e APP_JWT_SIGNATURE="$APP_JWT_SIGNATURE" \
+              -e APP_PASSWORD_KEY="$APP_PASSWORD_KEY" \
+              -e APP_DEFAULT_PASSWORD="$APP_DEFAULT_PASSWORD" \
+              -e DB_HOST="$DB_HOST" \
+              -e DB_PORT="$DB_PORT" \
+              -e DB_USERNAME="$DB_USERNAME" \
+              -e DB_PASSWORD="$DB_PASSWORD" \
+              -e DB_NAME="$DB_NAME" \
               $IMAGE:latest
         env:
           GHCR_TOKEN: ${{ secrets.GHCR_TOKEN }}
           GHCR_USER: ${{ github.actor }}
           IMAGE: ghcr.io/${{ github.repository_owner }}/api-e-clinic
+          APP_JWT_SIGNATURE: ${{ secrets.APP_JWT_SIGNATURE }}
+          APP_PASSWORD_KEY: ${{ secrets.APP_PASSWORD_KEY }}
+          APP_DEFAULT_PASSWORD: ${{ secrets.APP_DEFAULT_PASSWORD }}
+          DB_HOST: ${{ secrets.DB_HOST }}
+          DB_PORT: ${{ secrets.DB_PORT }}
+          DB_USERNAME: ${{ secrets.DB_USERNAME }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          DB_NAME: ${{ secrets.DB_NAME }}
